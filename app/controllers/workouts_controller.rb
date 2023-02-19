@@ -1,6 +1,7 @@
 class WorkoutsController < ApplicationController
     before_action :authenticate_user!
     def index
-        render json: Workout.all.filter { |workout| workout if workout.users.include?(current_user) }
+        @workouts = Workout.all.filter { |workout| workout if workout.users.include?(current_user) }
+        render :json => @workouts, include: [:exercises => { :only => [:id, :name] }]
     end
 end

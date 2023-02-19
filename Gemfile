@@ -72,3 +72,5 @@ gem "redis-rails", "~> 5.0"
 gem "rack-cors", "~> 1.1"
 
 gem 'devise_token_auth'
+
+gem 'active_model_serializers'
