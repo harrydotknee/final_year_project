@@ -6,13 +6,13 @@ class WorkoutsController < ApplicationController
     end
 
     def create
-      exercises = params[:workout][:exercises]
+      exercises = params[:exercises]
       workout = Workout.create(name: params[:workout][:name])
       workout.users << current_user
       exercises.each do |exercise|
-        workout.add_exercise(Exercise.find_by(name: exercise))
+        workout.add_exercise(Exercise.find_by(name: exercise["name"]))
       end
-      render :json => @workout, include: [:exercises => { :only => [:id, :name] }]
+      render :json => workout, include: [:exercises => { :only => [:id, :name] }]
     end
 
     def edit
