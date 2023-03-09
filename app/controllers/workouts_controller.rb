@@ -10,7 +10,7 @@ class WorkoutsController < ApplicationController
       workout = Workout.create(name: params[:workout][:name])
       workout.users << current_user
       exercises.each do |exercise|
-        workout.add_exercise(Exercise.find_by(name: exercise["name"]))
+        workout.exercises.create(name: exercise["name"])
       end
       render :json => workout, include: [:exercises => { :only => [:id, :name] }]
     end
@@ -18,9 +18,8 @@ class WorkoutsController < ApplicationController
     def edit
       workout = Workout.find(params[:id])
       exercises = params[:exercises]
-      debugger
-      new_exercises = exercises.map { |exercise| Exercise.find_by(name: exercise["name"]) }
-      workout.update(name: params[:name], exercises: new_exercises)
+      exercises.each { |exercise| workout.exercises.create(name: exercise["name"])}
+      workout.update(name: params[:name])
       render :json => workout, include: [:exercises => { :only => [:id, :name] }]
     end
 end
