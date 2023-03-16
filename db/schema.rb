@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_07_161604) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_13_105922) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,32 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_07_161604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["workout_id"], name: "index_exercises_on_workout_id"
+  end
+
+  create_table "muscle_tables", force: :cascade do |t|
+    t.bigint "exercise_type_id"
+    t.bigint "exercise_id"
+    t.integer "chest", default: 0
+    t.integer "forearms", default: 0
+    t.integer "shoulders", default: 0
+    t.integer "triceps", default: 0
+    t.integer "biceps", default: 0
+    t.integer "abs", default: 0
+    t.integer "quads", default: 0
+    t.integer "hamstrings", default: 0
+    t.integer "calves", default: 0
+    t.integer "glutes", default: 0
+    t.integer "traps", default: 0
+    t.integer "lats", default: 0
+    t.integer "middle_back", default: 0
+    t.integer "lower_back", default: 0
+    t.integer "adductors", default: 0
+    t.integer "abductors", default: 0
+    t.integer "neck", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_muscle_tables_on_exercise_id"
+    t.index ["exercise_type_id"], name: "index_muscle_tables_on_exercise_type_id"
   end
 
   create_table "users", force: :cascade do |t|
