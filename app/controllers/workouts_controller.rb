@@ -11,11 +11,15 @@ class WorkoutsController < ApplicationController
       workout = Workout.create(name: params[:workout][:name])
       workout.users << current_user
       exercises.each do |exercise|
-        workout_exercise = Exercise.create(name: exercise["name"], index: exercise["index"])
-        exercise_muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
-        exercise.create_muscle_table(exercise_muscle_table)
-        workout.exercises << workout_exercise
+        muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
+        workout.exercises.create(name: exercise["name"], index: exercise["index"]).create_muscle_table(muscle_table.attributes.except(
+          "id",
+          "exercise_id",
+          "created_at",
+          "updated_at"
+        ))
       end
+      workout.update(name: params[:name])
       render :json => workout, include: [:exercises => { :only => [:id, :name] }]
     end
 
