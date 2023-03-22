@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   get 'workouts', to: 'workouts#index'
   post 'workouts', to: 'workouts#create'
   post 'workouts/:id', to: 'workouts#edit'
+  delete 'workouts/:id', to: 'workouts#destroy'
   get 'exercises', to: 'exercise_types#index'
 end

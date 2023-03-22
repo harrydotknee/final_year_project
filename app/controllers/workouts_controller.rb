@@ -39,4 +39,10 @@ class WorkoutsController < ApplicationController
       workout.update(name: params[:name])
       render :json => workout, include: [:exercises => { :only => [:id, :name] }]
     end
+
+    def destroy
+      workout = Workout.find(params[:id])
+      workout.destroy
+      render :json => workout
+    end
 end
