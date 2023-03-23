@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   post 'workouts/:id', to: 'workouts#edit'
   delete 'workouts/:id', to: 'workouts#destroy'
   get 'exercises', to: 'exercise_types#index'
+  post 'workouts/:id/share', to: 'workouts#share'
 end
