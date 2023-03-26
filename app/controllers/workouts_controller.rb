@@ -8,7 +8,7 @@ class WorkoutsController < ApplicationController
 
   def create
     exercises = params[:exercises] || []
-    workout = Workout.create(name: [:name], accepted: true)
+    workout = Workout.create(name: params[:name], accepted: true)
     workout.users << current_user
     exercises.each do |exercise|
       muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
