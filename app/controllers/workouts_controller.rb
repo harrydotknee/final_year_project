@@ -48,8 +48,17 @@ class WorkoutsController < ApplicationController
   def share
     user = User.find_by(email: params[:email])
     if user
-      workout = Workout.find(params[:id]).dup
+      old_workout = Workout.find(params[:id])
+      workout = old_workout.dup
       new_workout = Workout.create(workout.attributes.merge(accepted: false))
+      old_workout.exercises.each do |exercise|
+        new_workout.exercises.create(exercise.attributes.except(
+          "id",
+          "workout_id",
+          "created_at",
+          "updated_at"
+        ))
+      end
       new_workout.users << user
       render :json => workout
     else
