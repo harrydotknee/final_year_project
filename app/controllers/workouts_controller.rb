@@ -14,6 +14,9 @@ class WorkoutsController < ApplicationController
       muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
       workout.exercises.create(
         name: exercise["name"],
+        reps: exercise["reps"],
+        sets: exercise["sets"],
+        weight: exercise["weight"],
         index: exercise["index"]
       ).create_muscle_table(muscle_table.attributes.except(
         "id",
@@ -33,6 +36,9 @@ class WorkoutsController < ApplicationController
       muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
       workout.exercises.create(
         name: exercise["name"],
+        reps: exercise["reps"],
+        sets: exercise["sets"],
+        weight: exercise["weight"],
         index: exercise["index"]
       ).create_muscle_table(muscle_table.attributes.except(
         "id",
