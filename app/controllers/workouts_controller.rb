@@ -2,7 +2,7 @@ class WorkoutsController < ApplicationController
   before_action :authenticate_user!
   protect_from_forgery unless: -> { request.format.json? }
   def index
-    workouts = Workout.all.filter { |workout| workout if workout.users.include?(current_user) }
+    workouts = current_user.workouts
     render :json => workouts, include: [:exercises]
   end
 
@@ -12,7 +12,10 @@ class WorkoutsController < ApplicationController
     workout.users << current_user
     exercises.each do |exercise|
       muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
-      workout.exercises.create(name: exercise["name"], index: exercise["index"]).create_muscle_table(muscle_table.attributes.except(
+      workout.exercises.create(
+        name: exercise["name"],
+        index: exercise["index"]
+      ).create_muscle_table(muscle_table.attributes.except(
         "id",
         "exercise_id",
         "created_at",
@@ -28,7 +31,10 @@ class WorkoutsController < ApplicationController
     workout.exercises.destroy_all
     exercises.each do |exercise|
       muscle_table = ExerciseType.find_by(name: exercise["name"]).muscle_table
-      workout.exercises.create(name: exercise["name"], index: exercise["index"]).create_muscle_table(muscle_table.attributes.except(
+      workout.exercises.create(
+        name: exercise["name"],
+        index: exercise["index"]
+      ).create_muscle_table(muscle_table.attributes.except(
         "id",
         "exercise_id",
         "created_at",
@@ -61,8 +67,6 @@ class WorkoutsController < ApplicationController
       end
       new_workout.users << user
       render :json => workout
-    else
-      render :json => { :error => "User not found" }
     end
   end
 end
