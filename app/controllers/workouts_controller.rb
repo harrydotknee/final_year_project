@@ -53,6 +53,11 @@ class WorkoutsController < ApplicationController
 
   def destroy
     workout = Workout.find(params[:id])
+    exercises = workout.exercises
+    exercises.each do |exercise|
+      exercise.muscle_table.destroy
+      exercise.destroy
+    end
     workout.destroy
     render :json => workout
   end
